@@ -3,12 +3,13 @@ from math import sqrt
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-import streamlit as st
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+import streamlit as st
+
 # Carregando os dados
-df = pd.read_csv("./dataset/BankChurners.csv")
+df = pd.read_csv("../dataset/BankChurners.csv")
 
 # Selecionar somente as colunas que importam para a análise
 cols_to_keep = ['Customer_Age', 'Gender', 'Dependent_count', 'Education_Level', 'Marital_Status', 'Income_Category',

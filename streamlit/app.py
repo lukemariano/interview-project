@@ -50,7 +50,7 @@ final_df = pd.concat([numeric_df, encoded_df], axis=1)
 scaler = StandardScaler()
 final_df_norm = scaler.fit_transform(final_df)
 
-n = 2
+n = 3
 
 # Utilizar o número ótimo de clusters identificado para realizar a clusterização
 kmeans = KMeans(n_clusters=n, random_state=42)
@@ -76,35 +76,5 @@ if st.sidebar.checkbox("Exibir dados originais"):
 if st.sidebar.checkbox("Exibir dados clusterizados"):
     st.subheader("Dados clusterizados")
     st.write(df.groupby('Cluster').mean())
-
-if st.sidebar.checkbox("Exibir distribuição dos clusters"):
-    st.subheader("Distribuição dos clusters")
-    sns.histplot(df, x="Cluster", stat="probability", kde=True)
-    plt.legend(title='Clusters', labels=[f'Cluster {i}' for i in range(n)])
-    st.pyplot()
-
-if st.sidebar.checkbox("Exibir previsão de gastos por usuário"):
-    st.subheader("Previsão de gastos por usuário")
-
-    # carregar o dataframe com a previsão de gastos por usuário
-    pred_df = pd.read_csv("./dataset/predicted_spending.csv")
-
-    # exibir a tabela com a previsão de gastos por usuário
-    st.write(pred_df)
-
-fig, ax = plt.subplots(figsize=(10, 8))
-
-for i in range(n):
-    ax.scatter(final_df_norm[clusters == i, 0], final_df_norm[clusters == i, 1], s=50, label=f'Cluster {i}')
-
-ax.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=200, marker='*', label='Centroids')
-ax.legend()
-ax.set_title('Clusterização dos clientes de um banco')
-ax.set_xlabel('Primeiro componente principal')
-ax.set_ylabel('Segundo componente principal')
-
-st.subheader("Clusterização dos clientes de um banco")
-st.pyplot(fig)
-
 
 
